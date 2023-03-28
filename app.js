@@ -3,12 +3,29 @@ const express=require('express');
 
 const app =express();
 
+const morgen =require('morgan')
+
 
 // register view engine 
 
 
 app.set("view engine","ejs")
 
+// listen for request 
+
+app.listen(3001)
+// midllware static file
+app.use(express.static("public"))
+// midllware using morgen 
+
+
+app.use(morgen("tiny"))
+
+app.use((req,res,next)=>{
+    console.log("next middlware");
+  
+    next();
+})
 // route
 app.get('/',(req,res)=>{
     const blogs = [
@@ -43,6 +60,9 @@ app.use((req,res)=>{
     res.status(404).render("404")
 
 })
-// listen for request 
 
-app.listen(3001)
+// midelware
+ 
+
+
+
