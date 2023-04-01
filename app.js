@@ -1,19 +1,24 @@
 const express=require('express');
 
-
+const mongoos=require("mongoose")
 const app =express();
 
 const morgen =require('morgan')
 
 
+
+
+// mongodb 
+const Url='mongodb+srv://radim:radim12345@cluster0.dtfdcof.mongodb.net/gestion?retryWrites=true&w=majority'
+mongoos.connect(Url,{ useNewUrlParser: true, useUnifiedTopology: true })
+.then((result)=>app.listen(3001))
+.catch((er)=>console.log(er))
 // register view engine 
-
-
 app.set("view engine","ejs")
 
 // listen for request 
 
-app.listen(3001)
+
 // midllware static file
 app.use(express.static("public"))
 // midllware using morgen 
