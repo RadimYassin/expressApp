@@ -5,13 +5,13 @@ const app =express();
 
 const morgen =require('morgan')
 
-
+const Blog =require("./models/blog")
 
 
 // mongodb 
 const Url='mongodb+srv://radim:radim12345@cluster0.dtfdcof.mongodb.net/gestion?retryWrites=true&w=majority'
 mongoos.connect(Url,{ useNewUrlParser: true, useUnifiedTopology: true })
-.then((result)=>app.listen(3001))
+.then((result)=>app.listen(4000))
 .catch((er)=>console.log(er))
 // register view engine 
 app.set("view engine","ejs")
@@ -32,16 +32,41 @@ app.use((req,res,next)=>{
     next();
 })
 // route
-app.get('/',(req,res)=>{
-    const blogs = [
-        {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-        {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-        {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-      ];
+app.get("/add",(req,res)=>{
+const blog=new Blog({
+    title:"RADIM e",
+    snippet:"papapappa",
+    body:"alalal"
+})
 
-  res.render("index",{blogs})
+blog.save().then((result)=>res.send(result)).catch((er)=>console.log(er))
+})
+
+
+app.get("/alldata",(req,res)=>{
+
+    Blog.find().then((result)=>{res.send(result)}).catch((er)=>{console.log(er);})
+})
+
+app.get("/fined",(req,res)=>{
+
+    Blog.findById("6428ac15c5ad19ac8893f3a2").then((result)=>{res.send(result)}).catch((er)=>{console.log(er);})
+})
+app.get('/',(req,res)=>{
+    res.redirect("blogs")
 
 })
+
+
+app.get('/blogs',(req,res)=>{
+     Blog.find()
+     .then((result)=>
+       res.render("index",{blogs:result})
+     )
+     .catch((er)=>console.log(er))
+
+})
+
 app.get('/about',(req,res)=>{
 
     res.render("about")
@@ -68,6 +93,4 @@ app.use((req,res)=>{
 
 // midelware
  
-
-
 
