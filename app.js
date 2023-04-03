@@ -47,6 +47,22 @@ app.get('/blogs',(req,res)=>{
      .catch((er)=>console.log(er))
 
 })
+
+// get details for item
+
+
+app.get("/blogs/:id",(req,res)=>{
+    const id = req.params.id
+
+    Blog.findById(id)
+    .then((result)=>{
+        res.render("details",{blog:result})
+    })
+    .catch((er)=>{
+        console.log(er);
+    })
+})
+
 app.get('/about',(req,res)=>{
 
     res.render("about")
