@@ -33,17 +33,6 @@ app.use((req,res,next)=>{
     next();
 })
 // route
-
-
-app.get("/alldata",(req,res)=>{
-
-    Blog.find().then((result)=>{res.send(result)}).catch((er)=>{console.log(er);})
-})
-
-app.get("/fined",(req,res)=>{
-
-    Blog.findById("6428ac15c5ad19ac8893f3a2").then((result)=>{res.send(result)}).catch((er)=>{console.log(er);})
-})
 app.get('/',(req,res)=>{
     res.redirect("blogs")
 
@@ -57,15 +46,6 @@ app.get('/blogs',(req,res)=>{
      )
      .catch((er)=>console.log(er))
 
-})
-// post request 
-
-app.post("/blogs",(req,res)=>{
-
-    const blog =new Blog(req.body)
-    blog.save().then((result)=>
-    res.redirect("/"))
-    .catch((er)=>console.log(er));
 })
 app.get('/about',(req,res)=>{
 

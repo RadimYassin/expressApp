@@ -18,10 +18,9 @@ const blogSchema =new Schema({
     }
 
 } ,{timestamps:true})
-
-
-// craete models
+// craete model
 
 
 const Blog = mongoose.model('blog',blogSchema);
 module.exports=Blog;
+
